@@ -3,7 +3,7 @@ require "devise"
 $: << File.expand_path("..", __FILE__)
 
 require "devise_sms_activable/routes"
-require "devise_sms_activable/schema"
+#require "devise_sms_activable/schema"
 require 'devise_sms_activable/controllers/url_helpers'
 require 'devise_sms_activable/controllers/helpers'
 require 'devise_sms_activable/rails'
@@ -21,7 +21,7 @@ module Devise
 
   # Set the smser reference object to access the smser.
   def self.sms_sender=(class_name)
-    @@sms_sender_ref = ActiveSupport::Dependencies.ref(class_name)
+    @@sms_sender_ref = Devise.ref(class_name)
   end
   
   self.sms_sender = "Devise::SmsSender"
