@@ -52,7 +52,7 @@ module Devise
       # Send confirmation token by sms
       def send_sms_token
         if(self.phone?)
-          generate_sms_token! if self.generate_sms_token.nil?
+          generate_sms_token! if self.sms_confirmation_token.nil?
           ::Devise.sms_sender.send_sms(self.phone, I18n.t(:"devise.sms_activations.sms_body", :sms_confirmation_token => self.sms_confirmation_token, :default => self.sms_confirmation_token))
         else
           self.errors.add(:sms_confirmation_token, :no_phone_associated)
@@ -154,7 +154,7 @@ module Devise
           # If the user is already confirmed, create an error for the user
           # Options must have the sms_confirmation_token
           def confirm_by_sms_token(sms_confirmation_token)
-            sms_confirmable = find_or_initialize_with_error_by(:sms_confirmation_token, sms_confirmation_token)
+            sms_confirmable = find_or_initialize_with_error_by(:sms_confirmation_token, sms_confirmation_token, :not_found)
             sms_confirmable.confirm_sms! if sms_confirmable.persisted?
             sms_confirmable
           end
