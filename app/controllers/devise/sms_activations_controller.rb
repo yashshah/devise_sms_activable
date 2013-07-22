@@ -3,7 +3,7 @@ class Devise::SmsActivationsController < DeviseController
   # GET /resource/sms_activation/new
   def new
     build_resource({})
-    render_with_scope :new
+    render :new
   end
 
   # POST /resource/sms_activation
