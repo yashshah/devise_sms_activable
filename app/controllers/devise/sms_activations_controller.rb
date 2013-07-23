@@ -1,5 +1,3 @@
-require 'devise'
-
 class Devise::SmsActivationsController < DeviseController
 
   # GET /resource/sms_activation/new
