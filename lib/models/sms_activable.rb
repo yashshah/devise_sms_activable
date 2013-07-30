@@ -32,6 +32,7 @@ module Devise
       included do
         before_create :generate_sms_token, :if => :sms_confirmation_required?
         after_create  :resend_sms_token, :if => :sms_confirmation_required?
+        attr_accessor :sms_token
       end
 
       # Confirm a user by setting it's sms_confirmed_at to actual time. If the user
@@ -155,6 +156,12 @@ module Devise
           # Options must have the sms_confirmation_token
           def confirm_by_sms_token(sms_confirmation_token)
             sms_confirmable = find_or_initialize_with_error_by(:sms_confirmation_token, sms_confirmation_token, :not_found)
+            sms_confirmable.confirm_sms! if sms_confirmable.persisted?
+            sms_confirmable
+          end
+
+          def confirm_sms_token(attributes={})
+            sms_confirmable = find_or_initialize_with_errors(:sms_confirmation_token, attributes, :not_found)
             sms_confirmable.confirm_sms! if sms_confirmable.persisted?
             sms_confirmable
           end
