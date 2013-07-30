@@ -32,7 +32,6 @@ module Devise
       included do
         before_create :generate_sms_token, :if => :sms_confirmation_required?
         after_create  :resend_sms_token, :if => :sms_confirmation_required?
-        attr_accessor :sms_token
       end
 
       # Confirm a user by setting it's sms_confirmed_at to actual time. If the user
