@@ -161,7 +161,7 @@ module Devise
           end
 
           def confirm_sms_token(attributes={})
-            sms_confirmable = find_or_initialize_with_errors(:sms_confirmation_token, attributes, :not_found)
+            sms_confirmable = find_or_initialize_with_errors([:id, :sms_token], attributes, :not_found)
             sms_confirmable.confirm_sms! if sms_confirmable.persisted?
             sms_confirmable
           end
