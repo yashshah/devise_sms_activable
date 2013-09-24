@@ -70,7 +70,7 @@ module Devise
       # is already confirmed, it should never be blocked. Otherwise we need to
       # calculate if the confirm time has not expired for this user.
 
-      def active?
+      def active_for_authentication?
         super && !sms_confirmation_required? || confirmed_sms? || confirmation_sms_period_valid?
       end
 
